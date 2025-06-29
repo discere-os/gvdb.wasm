@@ -32,3 +32,17 @@ meson.override_dependency('gvdb', gvdb_dep)
 if get_option('tests')
   subdir('gvdb/tests')
 endif
+
+if get_option('build-tools')
+  gvdb_dump_sources = files(
+      'gvdb/gvdb-reader.c',
+      'tools/gvdb-dump.c',
+  )
+
+  glib_dep = dependency('glib-2.0')
+
+  executable('gvdb-dump',
+             sources: gvdb_dump_sources,
+             dependencies: glib_dep,
+             install: true)
+endif
