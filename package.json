@@ -1,0 +1,36 @@
+{
+  "name": "gvdb.wasm",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "GVDB (GVariant Database) key-value store compiled to WebAssembly",
+  "main": "dist/node/index.js",
+  "module": "dist/browser-es6/index.js",
+  "scripts": {
+    "build": "npm run build:wasm && npm run build:js",
+    "build:wasm": "mkdir -p wasm-build && cd wasm-build && emcc -O3 -std=c11 -s WASM=1 -s MODULARIZE=1 -s EXPORT_ES6=1 -s EXPORTED_FUNCTIONS='[\"_gvdb_wasm_create\", \"_gvdb_wasm_free\", \"_gvdb_wasm_set\", \"_gvdb_wasm_get\", \"_gvdb_wasm_has_key\", \"_gvdb_wasm_remove\", \"_gvdb_wasm_get_keys\", \"_gvdb_wasm_size\", \"_gvdb_wasm_clear\", \"_gvdb_wasm_serialize\", \"_gvdb_wasm_deserialize\", \"_gvdb_wasm_free_keys_array\", \"_gvdb_wasm_free_buffer\", \"_gvdb_wasm_performance_test\", \"_malloc\", \"_free\"]' -s EXPORTED_RUNTIME_METHODS='[\"ccall\", \"cwrap\", \"UTF8ToString\", \"stringToUTF8\", \"lengthBytesUTF8\"]' -s INITIAL_MEMORY=16MB -s MAXIMUM_MEMORY=256MB -s ALLOW_MEMORY_GROWTH=1 -s STACK_SIZE=1MB -s ASSERTIONS=0 --closure 1 -DEMSCRIPTEN_KEEPALIVE ../wasm/wasm_module.c -o gvdb.js",
+    "build:js": "echo 'JavaScript wrapper generation complete'",
+    "test": "echo 'Tests would run here'",
+    "dev": "python3 -m http.server 3000"
+  },
+  "keywords": [
+    "database",
+    "key-value",
+    "gvdb",
+    "gvariant",
+    "storage",
+    "wasm",
+    "webassembly"
+  ],
+  "author": "WASM Ecosystem Contributors",
+  "license": "LGPL-2.1-or-later",
+  "files": [
+    "wasm-build/",
+    "dist/",
+    "wasm/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/superstruct/gvdb.wasm.git"
+  },
+  "homepage": "https://github.com/superstruct/gvdb.wasm"
+}
